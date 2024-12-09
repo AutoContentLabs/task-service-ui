@@ -26,7 +26,7 @@ export default function TaskDetail() {
     if (id) {
       const loadTask = async () => {
         try {
-          const data = await fetchTaskById(id as string); // Fetch task by id
+          const data = await fetchTaskById(typeof id === "string" ? id : id[0]); // Fetch task by id
           setTask(data);
         } catch (error) {
           console.error("Failed to load task:", error);
@@ -39,13 +39,14 @@ export default function TaskDetail() {
   const handleAction = async (action: string) => {
     if (id) {
       try {
-        if (action === "start") await startTask(id);
-        if (action === "stop") await stopTask(id);
-        if (action === "pause") await pauseTask(id);
-        if (action === "resume") await resumeTask(id);
-        if (action === "restart") await restartTask(id);
+        const taskId = typeof id === "string" ? id : id[0]; // Make sure it's a string
+        if (action === "start") await startTask(taskId);
+        if (action === "stop") await stopTask(taskId);
+        if (action === "pause") await pauseTask(taskId);
+        if (action === "resume") await resumeTask(taskId);
+        if (action === "restart") await restartTask(taskId);
         // Refresh task after action
-        const updatedTask = await fetchTaskById(id);
+        const updatedTask = await fetchTaskById(taskId);
         setTask(updatedTask);
       } catch (error) {
         console.error(`Error performing ${action} on task:`, error);
