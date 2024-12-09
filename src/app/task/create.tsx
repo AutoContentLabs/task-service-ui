@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { createTask } from "../../utils/api";
 import { useRouter } from "next/navigation";
-import { Task } from "../../types"; // Task türünü içeri aktarın
+import { Task } from "../../types";
 
 export default function CreateTask() {
   const [name, setName] = useState("");

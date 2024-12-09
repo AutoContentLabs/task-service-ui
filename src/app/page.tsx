@@ -4,14 +4,7 @@
 import { useEffect, useState } from "react";
 import { fetchTasks } from "../utils/api";
 import Link from "next/link";
-
-// Task type
-type Task = {
-  _id: string;
-  name: string;
-  description: string;
-  status: string;
-};
+import { Task } from "../types";
 
 export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);

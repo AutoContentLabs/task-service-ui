@@ -1,5 +1,6 @@
 // src/types/index.ts
 export type Task = {
+  _id: string;
   name: string; // Task name (unique)
   description?: string; // Task description (optional)
   headers?: Record<string, any>; // correlationId, traceId gibi başlıklar (optional)

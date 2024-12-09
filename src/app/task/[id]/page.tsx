@@ -11,13 +11,7 @@ import {
   restartTask,
 } from "../../../utils/api";
 
-type Task = {
-  _id: string;
-  name: string;
-  description: string;
-  status: string;
-  state: string;
-};
+import { Task } from "../../../types";
 
 export default function TaskDetail() {
   const { id } = useParams(); // Get the dynamic `id` from the URL
