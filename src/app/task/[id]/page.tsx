@@ -1,3 +1,4 @@
+// src\app\task\[id]\page.tsx
 "use client"; // This ensures that the component is a Client Component
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; // Import useParams from next/navigation

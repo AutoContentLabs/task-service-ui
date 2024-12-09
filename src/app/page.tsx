@@ -1,4 +1,5 @@
-"use client"; // Bunu ekleyin
+// src\app\page.tsx
+"use client"; //
 
 import { useEffect, useState } from "react";
 import { fetchTasks } from "../utils/api";
@@ -31,15 +32,15 @@ export default function Home() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "STARTED":
-        return "bg-blue-500 text-white";  // Metin beyaz olacak
+        return "bg-blue-500 text-white";
       case "RESTARTED":
-        return "bg-gray-500 text-white"; // Metin beyaz olacak
+        return "bg-gray-500 text-white";
       case "IDLE":
-        return "bg-green-500 text-white"; // Metin beyaz olacak
+        return "bg-green-500 text-white";
       case "FAILED":
-        return "bg-red-500 text-white";   // Metin beyaz olacak
+        return "bg-red-500 text-white";
       default:
-        return "bg-yellow-500 text-white"; // Metin beyaz olacak
+        return "bg-yellow-500 text-white";
     }
   };
 
@@ -48,6 +49,17 @@ export default function Home() {
       <h1 className="text-4xl font-semibold text-center mb-8 text-gray-800">
         Task List
       </h1>
+      
+      {/* Yeni Görev Ekle Butonu */}
+      <div className="mb-6 text-center">
+        <Link
+          href="/task/create"  // "/task/create" sayfasına yönlendirecek
+          className="text-white bg-blue-500 hover:bg-blue-600 rounded px-4 py-2 inline-block transition-colors"
+        >
+          Create New Task
+        </Link>
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {tasks.map((task) => (
           <div

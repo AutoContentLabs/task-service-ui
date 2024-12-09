@@ -1,7 +1,8 @@
+// src\utils\api.ts
 import axios from "axios";
 
 const apiUrl = "http://localhost:53100/api/tasks";
-
+import { Task } from "../types";
 // Fetch all tasks
 export const fetchTasks = async () => {
   try {
@@ -25,18 +26,23 @@ export const fetchTaskById = async (id: string) => {
 };
 
 // Create a task
-export const createTask = async (task: any) => {
+export const createTask = async (task: Task) => {
   try {
     const response = await axios.post(apiUrl, task);
+    console.log("Task created successfully:", response.data); // Başarıyla oluşturulan veriyi logla
     return response.data;
   } catch (error) {
     console.error("Error creating task:", error);
+    if (error.response) {
+      console.error('API error response:', error.response.data); // API yanıtını logla
+    }
     throw error;
   }
 };
 
+
 // Update a task
-export const updateTask = async (id: string, task: any) => {
+export const updateTask = async (id: string, task: Task) => {
   try {
     const response = await axios.put(`${apiUrl}/${id}`, task);
     return response.data;
