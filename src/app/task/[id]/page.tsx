@@ -1,5 +1,5 @@
 // src\app\task\[id]\page.tsx
-"use client"; // This ensures that the component is a Client Component
+"use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; // Import useParams from next/navigation
 import {
@@ -18,6 +18,7 @@ export default function TaskDetail() {
   const [task, setTask] = useState<Task | null>(null);
 
   useEffect(() => {
+    // Only fetch task if the id is available
     if (id) {
       const loadTask = async () => {
         try {
