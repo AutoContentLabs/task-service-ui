@@ -3,6 +3,18 @@ import axios from "axios";
 
 const apiUrl = "http://localhost:53100/api/tasks";
 import { Task } from "../types";
+
+// api.ts - Hata yönetimi
+const handleApiError = (error: any) => {
+  if (error.response) {
+    console.error('API error response:', error.response.data);
+  } else {
+    console.error('Unexpected error:', error);
+  }
+  // Burada kullanıcıya gösterilebilecek bir mesaj dönebilirsiniz
+};
+
+
 // Fetch all tasks
 export const fetchTasks = async () => {
   try {

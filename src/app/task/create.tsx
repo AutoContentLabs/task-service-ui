@@ -18,19 +18,16 @@ export default function CreateTask() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Görev oluşturma için gönderilen veri
       const task: Task = { name, description, status, type, state: 'IDLE', version: 1 };
-
-      // API'ye görev gönderme
       await createTask(task);
-      // Başarıyla oluşturulduğunda anasayfaya yönlendirme
-      router.push("/");  
+      router.push("/");  // Başarıyla yönlendir
     } catch (error) {
       console.error("Failed to create task:", error);
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-background p-8">

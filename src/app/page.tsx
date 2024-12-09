@@ -27,22 +27,18 @@ export default function Home() {
     };
     loadTasks();
   }, []);
+  
 
-  // Duruma göre farklı renkler seçmek
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "STARTED":
-        return "bg-blue-500 text-white";
-      case "RESTARTED":
-        return "bg-gray-500 text-white";
-      case "IDLE":
-        return "bg-green-500 text-white";
-      case "FAILED":
-        return "bg-red-500 text-white";
-      default:
-        return "bg-yellow-500 text-white";
-    }
+  const statusColors: Record<string, string> = {
+    STARTED: "bg-blue-500 text-white",
+    RESTARTED: "bg-gray-500 text-white",
+    IDLE: "bg-green-500 text-white",
+    FAILED: "bg-red-500 text-white",
+    DEFAULT: "bg-yellow-500 text-white",
   };
+  
+  const getStatusColor = (status: string) => statusColors[status] || statusColors.DEFAULT;
+  
 
   return (
     <div className="min-h-screen bg-background p-8">
