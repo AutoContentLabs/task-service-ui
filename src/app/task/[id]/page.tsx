@@ -1,7 +1,6 @@
-// src\app\task\[id]\page.tsx
 "use client";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; // Import useParams from next/navigation
+import { useParams } from "next/navigation";
 import {
   fetchTaskById,
   startTask,
@@ -14,43 +13,55 @@ import {
 import { Task } from "../../../types";
 
 export default function TaskDetail() {
-  const { id } = useParams(); // Get the dynamic `id` from the URL
+  const { id } = useParams();
   const [task, setTask] = useState<Task | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
 
-  useEffect(() => {
-    // Only fetch task if the id is available
-    if (id) {
-      const loadTask = async () => {
-        try {
-          const data = await fetchTaskById(typeof id === "string" ? id : id[0]); // Fetch task by id
-          setTask(data);
-        } catch (error) {
-          console.error("Failed to load task:", error);
-        }
-      };
-      loadTask();
+  const fetchTask = async () => {
+    try {
+      if (id) {
+        const data = await fetchTaskById(typeof id === "string" ? id : id[0]);
+        setTask(data);
+        setRetryCount(0); // Reset retry count on success
+      }
+    } catch (error) {
+      console.error("Failed to fetch task:", error);
+      setRetryCount((prev) => prev + 1);
     }
-  }, [id]); // Fetch the task whenever `id` changes
+  };
+
+  // Fetch task on mount and start polling
+  useEffect(() => {
+    fetchTask(); // Fetch initially
+    const interval = setInterval(() => {
+      if (retryCount < 10) {
+        fetchTask();
+      } else {
+        console.error("Max retry attempts reached. Stopping polling.");
+        clearInterval(interval);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [id, retryCount]);
 
   const handleAction = async (action: string) => {
     if (id) {
       try {
-        const taskId = typeof id === "string" ? id : id[0]; // Make sure it's a string
+        const taskId = typeof id === "string" ? id : id[0];
         if (action === "start") await startTask(taskId);
         if (action === "stop") await stopTask(taskId);
         if (action === "pause") await pauseTask(taskId);
         if (action === "resume") await resumeTask(taskId);
         if (action === "restart") await restartTask(taskId);
-        // Refresh task after action
-        const updatedTask = await fetchTaskById(taskId);
-        setTask(updatedTask);
+        fetchTask(); // Refresh immediately after action
       } catch (error) {
         console.error(`Error performing ${action} on task:`, error);
       }
     }
   };
 
-  if (!task) return <div>Loading...</div>; // Show loading if task is not yet available
+  if (!task) return <div>Loading...</div>;
 
   return (
     <div className="min-h-screen bg-background p-8">
