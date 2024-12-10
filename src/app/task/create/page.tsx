@@ -2,9 +2,9 @@
 "use client";
 
 import { useState } from "react";
-import { createTask } from "../../utils/api";
+import { createTask } from "../../../utils/api";
 import { useRouter } from "next/navigation";
-import { Task } from "../../types";
+import { Task } from "../../../types";
 
 export default function CreateTask() {
   const [name, setName] = useState("");
