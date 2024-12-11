@@ -9,18 +9,10 @@ export default function CreateTask() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("TASK");
-  const [dependencies, setDependencies] = useState([{ type: "", name: "" }]); // Single-select for dependencies
-  const [onStart, setOnStart] = useState([
-    {
-      type: "CONFIG", // Default type
-      name: "",
-      parameters: { parallel: false, timeout: 0, retries: 0 },
-      input: { storage: { database: "", collection: "", flow: "" } },
-      output: { format: "json", data: [] },
-    },
-  ]);
-  const [onFailure, setOnFailure] = useState([{ type: "FUNCTION", name: "" }]);
-  const [onSuccess, setOnSuccess] = useState([{ type: "STATUS", name: "" }]);
+  const [dependencies, setDependencies] = useState([]); // Initially empty
+  const [onStart, setOnStart] = useState([]); // Initially empty
+  const [onFailure, setOnFailure] = useState([]); // Initially empty
+  const [onSuccess, setOnSuccess] = useState([]); // Initially empty
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -288,9 +280,9 @@ export default function CreateTask() {
                   }}
                   className="w-full p-2 border border-gray-300 rounded"
                 >
-                  <option value="STATUS">STATUS</option>
-                  <option value="ACTION">ACTION</option>
-                  <option value="STEP">STEP</option>
+                  <option value="TASK">TASK</option>
+                  <option value="WORKFLOW">WORKFLOW</option>
+                  <option value="PIPELINE">PIPELINE</option>
                 </select>
               </div>
               <div className="mb-2">
@@ -324,14 +316,15 @@ export default function CreateTask() {
           </button>
         </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={isLoading}
-          className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
-        >
-          {isLoading ? "Creating..." : "Create Task"}
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="py-2 px-4 bg-blue-600 text-white rounded"
+          >
+            {isLoading ? "Creating..." : "Create Task"}
+          </button>
+        </div>
       </form>
     </div>
   );
