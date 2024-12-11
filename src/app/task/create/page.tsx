@@ -44,7 +44,7 @@ export default function CreateTask() {
         version: 1,
       };
       await createTask(task);
-      router.push("/");  // Redirect to home page after successful creation
+      router.push("/"); // Redirect to home page after successful creation
     } catch (error) {
       console.error("Failed to create task:", error);
     } finally {
@@ -75,7 +75,10 @@ export default function CreateTask() {
 
         {/* Task Description */}
         <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-semibold mb-2">
+          <label
+            htmlFor="description"
+            className="block text-sm font-semibold mb-2"
+          >
             Description
           </label>
           <textarea
@@ -98,20 +101,22 @@ export default function CreateTask() {
             onChange={(e) => setType(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
           >
-            <option value="TASK">Task</option>
-            <option value="WORKFLOW">Workflow</option>
-            <option value="PIPELINE">Pipeline</option>
+            <option value="TASK">TASK</option>
+            <option value="WORKFLOW">WORKFLOW</option>
+            <option value="PIPELINE">PIPELINE</option>
             <option value="DAG">DAG</option>
-            <option value="LINEAR">Linear</option>
-            <option value="SERVICE">Service</option>
-            <option value="FUNCTION">Function</option>
-            <option value="ACTION">Action</option>
+            <option value="LINEAR">LINEAR</option>
+            <option value="SERVICE">SERVICE</option>
+            <option value="FUNCTION">FUNCTION</option>
+            <option value="ACTION">ACTION</option>
           </select>
         </div>
 
         {/* Dependencies Section */}
         <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2">Dependencies</label>
+          <label className="block text-sm font-semibold mb-2">
+            Dependencies
+          </label>
           {dependencies.map((entry, index) => (
             <div key={index} className="border p-4 mb-2 rounded">
               <div className="mb-2">
@@ -130,6 +135,9 @@ export default function CreateTask() {
                   <option value="PIPELINE">PIPELINE</option>
                   <option value="DAG">DAG</option>
                   <option value="LINEAR">LINEAR</option>
+                  <option value="SERVICE">SERVICE</option>
+                  <option value="FUNCTION">FUNCTION</option>
+                  <option value="ACTION">ACTION</option>
                 </select>
               </div>
               <div className="mb-2">
@@ -147,7 +155,9 @@ export default function CreateTask() {
               </div>
               <button
                 type="button"
-                onClick={() => removeEntry(setDependencies, dependencies, index)}
+                onClick={() =>
+                  removeEntry(setDependencies, dependencies, index)
+                }
                 className="text-red-500"
               >
                 Remove
@@ -280,9 +290,9 @@ export default function CreateTask() {
                   }}
                   className="w-full p-2 border border-gray-300 rounded"
                 >
-                  <option value="TASK">TASK</option>
-                  <option value="WORKFLOW">WORKFLOW</option>
-                  <option value="PIPELINE">PIPELINE</option>
+                  <option value="STATUS">STATUS</option>
+                  <option value="ACTION">ACTION</option>
+                  <option value="STEP">STEP</option>
                 </select>
               </div>
               <div className="mb-2">
