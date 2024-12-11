@@ -1,8 +1,8 @@
 // src\app\page.tsx
-"use client"; //
+"use client"; // 
 
 import { useEffect, useState } from "react";
-import { fetchTasks } from "../utils/api";
+import { fetchTasks, deleteTask } from "../utils/api";  // deleteTask fonksiyonunu import ettik
 import Link from "next/link";
 import { Task } from "../types";
 
@@ -20,7 +20,6 @@ export default function Home() {
     };
     loadTasks();
   }, []);
-  
 
   const statusColors: Record<string, string> = {
     STARTED: "bg-blue-500 text-white",
@@ -29,16 +28,26 @@ export default function Home() {
     FAILED: "bg-red-500 text-white",
     DEFAULT: "bg-yellow-500 text-white",
   };
-  
+
   const getStatusColor = (status: string) => statusColors[status] || statusColors.DEFAULT;
-  
+
+  const handleDelete = async (taskId: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+    if (confirmDelete) {
+      try {
+        await deleteTask(taskId); // deleteTask API fonksiyonu çağrılıyor
+        setTasks((prevTasks) => prevTasks.filter((task) => task._id !== taskId)); // Silinen görevi güncelliyoruz
+      } catch (error) {
+        console.error("Failed to delete task:", error);
+        alert("Failed to delete task. Please try again.");
+      }
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background p-8">
-      <h1 className="text-4xl font-semibold text-center mb-8 text-gray-800">
-        Task List
-      </h1>
-      
+      <h1 className="text-4xl font-semibold text-center mb-8 text-gray-800">Task List</h1>
+
       {/* Yeni Görev Ekle Butonu */}
       <div className="mb-6 text-center">
         <Link
@@ -67,6 +76,15 @@ export default function Home() {
               >
                 View Details
               </Link>
+            </div>
+            {/* Silme Butonu */}
+            <div className="mt-4">
+              <button
+                onClick={() => handleDelete(task._id)}
+                className="text-white bg-red-500 hover:bg-red-600 rounded px-4 py-2 inline-block transition-colors"
+              >
+                Delete Task
+              </button>
             </div>
           </div>
         ))}
